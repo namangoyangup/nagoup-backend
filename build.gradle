@@ -1,0 +1,51 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.street'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    swagger2Version = '2.9.2'
+    oldSwagger2Version = '1.5.21'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
+    //testImplementation 'org.springframework.security:spring-security-test'
+
+    // Swagger 2
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+
+    implementation("io.springfox:springfox-swagger2:${swagger2Version}") {
+        exclude group: 'io.swagger', module: 'swagger-annotations'
+        exclude group: 'io.swagger', module: 'swagger-models'
+    }
+
+    implementation "io.swagger:swagger-annotations:${oldSwagger2Version}"
+    implementation "io.swagger:swagger-models:${oldSwagger2Version}"
+}
+
+test {
+    useJUnitPlatform()
+}
